@@ -1,1 +1,123 @@
-Hello World
+<!doctype html>
+
+<title>프로그래밍을 합시다.</title>
+<meta charset="utf-8"/>
+<link rel=stylesheet href="./codemirror-5.14.2/doc/docs.css">
+
+<link rel="stylesheet" href="./codemirror-5.14.2/lib/codemirror.css">
+<link rel="stylesheet" href="./codemirror-5.14.2/addon/hint/show-hint.css">
+<script src="./codemirror-5.14.2/lib/codemirror.js"></script>
+<script src="./codemirror-5.14.2/addon/hint/show-hint.js"></script>
+<script src="./codemirror-5.14.2/addon/hint/javascript-hint.js"></script>
+<script src="./codemirror-5.14.2/mode/javascript/javascript.js"></script>
+<style>
+  .CodeMirror {
+      height:100%;
+      background-color: #f0f3f0;
+  }
+  .button {
+      float:left;
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 5px 12px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 1px 1px;
+      cursor: pointer;
+  }
+  .button:hover {
+    background-color: #3c7c3b;
+    /*margin: 1px 1px;*/
+    /*margin-top: 2px;*/
+  }
+  .button:active {
+    background-color: #55ed54;
+    margin: 1px 1px;
+    margin-top: 3px;
+  }
+
+  #console_area {
+    width:100%;
+    height:20%;
+    padding:5px;
+  }
+</style>
+
+<form style="height:80%;"><textarea id="code" name="code" >
+</textarea></form>
+<div style="padding:10px;">
+  <span>
+    <div class="button" onclick="Run()">Run</div>
+    <div class="button" onclick="Clear()">Clear Console</div>
+    <div style="float: right;">이 페이지는 <a href="http://codemirror.net/" target="_blank">CodeMirror</a>를 사용하여 제작하였습니다.</div>
+  </span>
+  <br>
+  <br>
+  <div id="console_area">
+  </div>
+</div>
+<script>
+  var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+    lineNumbers: true,
+    extraKeys: {"Alt-Space": "autocomplete"},
+    mode: {name: "javascript", globalVars: true},
+    hintOptions: {hint: synonyms}
+  });
+
+  var consoleArea = document.getElementById("console_area");
+  console.log = function(value){
+    var logElement = document.createTextNode(value);
+    var br = document.createElement("br");
+    consoleArea.appendChild(logElement); 
+    consoleArea.appendChild(br); 
+  };
+
+  function Run(){
+    try {
+        eval(editor.doc.getValue()); 
+    } catch (e) {
+      console.log(e.message);
+    }
+  }
+  function Clear(){
+    consoleArea.innerHTML = '';
+  }
+
+
+  if (typeof Promise !== undefined) {
+    var comp = [
+      ["here", "hither"],
+      ["asynchronous", "nonsynchronous"],
+      ["completion", "achievement", "conclusion", "culmination", "expirations"],
+      ["hinting", "advive", "broach", "imply"],
+      ["function","action"],
+      ["provide", "add", "bring", "give"],
+      ["synonyms", "equivalents"],
+      ["words", "token"],
+      ["each", "every"],
+    ];
+
+    function synonyms(cm, option) {
+      return new Promise(function(accept) {
+        setTimeout(function() {
+          var cursor = cm.getCursor(), line = cm.getLine(cursor.line)
+          var start = cursor.ch, end = cursor.ch
+          while (start && /\w/.test(line.charAt(start - 1))) --start
+          while (end < line.length && /\w/.test(line.charAt(end))) ++end
+          var word = line.slice(start, end).toLowerCase()
+          for (var i = 0; i < comp.length; i++) if (comp[i].indexOf(word) != -1)
+            return accept({list: comp[i],
+                           from: CodeMirror.Pos(cursor.line, start),
+                           to: CodeMirror.Pos(cursor.line, end)})
+          return accept(null)
+        }, 100)
+      })
+    }
+  }
+
+</script>
+
+</article>
