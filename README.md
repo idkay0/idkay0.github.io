@@ -1,9 +1,7 @@
 ## Javascript 연습장 v1
---------
 
 [CodeMirror](https://github.com/codemirror/CodeMirror)를 사용해 만든 간단한 연습장입니다.
 
---------
 
 ### CodeMirror 수정기록   
 - 160423   
