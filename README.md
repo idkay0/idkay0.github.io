@@ -2,8 +2,9 @@
 
 [CodeMirror](https://github.com/codemirror/CodeMirror)를 사용해 만든 간단한 연습장입니다.
 
+[Demo Page](http://idkay0.github.io/)
 
-### CodeMirror 수정기록   
+#### CodeMirror 수정기록   
 - 160423   
 /lib/codemirror.js:1194 
 ```javascript
