@@ -1191,9 +1191,15 @@
     return {text: text, ranges: ranges};
   }
 
+  // 2016.04.24 idkay0@gmail.com
+  // function disableBrowserMagic(field) {
+  //   field.setAttribute("autocorrect", "off");
+  //   field.setAttribute("autocapitalize", "off");
+  //   field.setAttribute("spellcheck", "false");
+  // }
   function disableBrowserMagic(field) {
-    field.setAttribute("autocorrect", "off");
-    field.setAttribute("autocapitalize", "off");
+    field.setAttribute("autocorrect", "none");
+    field.setAttribute("autocapitalize", "none");
     field.setAttribute("spellcheck", "false");
   }
 

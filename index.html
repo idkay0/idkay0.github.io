@@ -46,7 +46,7 @@
   }
 </style>
 
-<form style="height:80%;"><textarea id="code" name="code" >
+<form style="height:80%;"><textarea id="code" name="code">
 </textarea></form>
 <div style="padding:10px;">
   <span>
@@ -60,6 +60,8 @@
   </div>
 </div>
 <script>
+
+
   var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
     lineNumbers: true,
     extraKeys: {"Alt-Space": "autocomplete"},
